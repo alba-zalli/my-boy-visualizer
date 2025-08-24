@@ -1,105 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>YouTube Orb Visualizer</title>
-  <style>
-    body { margin: 0; overflow: hidden; background: black; }
-    #ytplayer { display: none; }
-    #linkInput {
-      position: absolute;
-      top: 20px;
-      left: 20px;
-      z-index: 10;
-      background: rgba(0,0,0,0.7);
-      padding: 10px;
-      border-radius: 8px;
+    <meta charset="UTF-8">
+    <title>My Boy</title>
+
+    <link rel="preload" href="DreamerTM-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+    <style>
+    @font-face {
+      font-family: 'Dreamer TM';
+      src: url('DreamerTM-Regular.woff2') format('woff2'),
+           url('DreamerTM-Regular.woff') format('woff'),
+           url('DreamerTM-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
     }
-    input {
-      width: 300px;
-    }
-    button {
-      margin-left: 10px;
+
+
+    .your-style {
+      font-family: 'Dreamer TM', sans-serif;
+      font-weight: normal;
+      font-style: normal;
     }
   </style>
 </head>
+
+<audio controls>
+    <source src="my-boy.mp3" type="audio/mpeg">
+    <source src="song.ogg" type="audio/ogg">
+    Your browser does not support the audio element.
+</audio>
+
 <body>
-  <div id="linkInput">
-    <input type="text" id="youtubeURL" placeholder="Enter YouTube link...">
-    <button onclick="loadVideo()">Load</button>
-  </div>
-  <div id="ytplayer"></div>
-
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r148/three.min.js"></script>
-  <script>
-    let player;
-    let orb, scene, camera, renderer;
-    let startTime = Date.now();
-
-    function extractVideoID(url) {
-      const regex = /(?:v=|\.be\/)([a-zA-Z0-9_-]{11})/;
-      const match = url.match(regex);
-      return match ? match[1] : null;
-    }
-
-    function loadVideo() {
-      const url = document.getElementById("youtubeURL").value;
-      const videoId = extractVideoID(url);
-      if (videoId) {
-        if (player) player.loadVideoById(videoId);
-        else createPlayer(videoId);
-      } else {
-        alert("Invalid YouTube URL");
-      }
-    }
-
-    function createPlayer(videoId) {
-      player = new YT.Player("ytplayer", {
-        videoId: videoId,
-        events: {
-          onReady: (e) => e.target.playVideo()
-        }
-      });
-    }
-
-    function init3D() {
-      scene = new THREE.Scene();
-      camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-      camera.position.z = 5;
-
-      renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      document.body.appendChild(renderer.domElement);
-
-      const geometry = new THREE.SphereGeometry(1, 64, 64);
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, wireframe: true });
-      orb = new THREE.Mesh(geometry, material);
-      scene.add(orb);
-
-      animate();
-    }
-
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // Simulated frequency pulse using sine wave based on time
-      const elapsed = (Date.now() - startTime) / 1000;
-      const scale = 1 + 0.3 * Math.sin(elapsed * 6) + 0.2 * Math.sin(elapsed * 2.3);
-      orb.scale.set(scale, scale, scale);
-
-      orb.rotation.x += 0.005;
-      orb.rotation.y += 0.007;
-
-      renderer.render(scene, camera);
-    }
-
-    function onYouTubeIframeAPIReady() {
-      // Wait for user input to create player
-    }
-
-    init3D();
-  </script>
+<p class="your-style" style="font-size: 90px">
+    My boy, we don't see each other much<br>
+    My boy, we don't see each other much<br>
+    It'll take some time<br>
+    But somewhere down the line<br>
+    We won't be alone<br>
+    My boy, we don't see each other much<br>
+    My boy, we don't see each other much<br>
+    It'll take some time<br>
+    But somewhere down the line<br>
+    We won't be alone<br>
+    My boy, we don't see each other much<br>
+    My boy, we don't see each other much<br>
+    It'll take some time<br>
+    But somewhere down the line<br>
+    We won't be<br>
+</p>
 </body>
 </html>
-
